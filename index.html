@@ -176,14 +176,16 @@ body {
   padding: 0 36px;
   display: grid;
   grid-template-columns: 1.15fr .85fr;
-  gap: 70px;
+  grid-template-areas:
+    "headline form"
+    "body     form";
+  gap: 28px 70px;
   align-items: start;
   position: relative;
 }
-
-.hero-text {
-  position: relative;
-}
+.hero-inner > h1.hero-title { grid-area: headline; }
+.hero-inner > .hero-body { grid-area: body; }
+.hero-inner > .form-aside { grid-area: form; }
 
 /* HUGE serif headline */
 h1.hero-title {
@@ -528,16 +530,31 @@ h1.hero-title em::after {
 @media (max-width: 980px) {
   .mast-right { display: none; }
   .header-inner { padding: 22px 22px 18px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 36px; padding: 0 22px; }
-  h1.hero-title { font-size: clamp(46px, 11vw, 80px); }
-  .lead-cols { column-count: 1; }
+  /* Mobile order: H1 → FORM (above the fold) → BODY (lead + features) */
+  .hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "headline"
+      "form"
+      "body";
+    gap: 24px;
+    padding: 0 22px;
+  }
+  h1.hero-title {
+    font-size: clamp(38px, 9vw, 60px);
+    margin-bottom: 8px;
+  }
+  .lead-cols { column-count: 1; margin-bottom: 22px; }
   .features { grid-template-columns: 1fr; gap: 22px; }
   .feature { padding-top: 14px; border-top: 1px solid var(--hairline-2); }
   .feature:first-child { padding-top: 0; border-top: 0; }
   .form-aside { padding-top: 0; }
   .form-panel { box-shadow: 5px 5px 0 var(--magenta); padding: 30px 22px 24px; }
+  .form-title { font-size: 30px; }
   .ribbon-inner { grid-template-columns: 1fr 1fr; gap: 18px; padding: 0 22px; }
   .ribbon-cell { border-inline-start: 0; padding-inline-start: 0; }
+  /* Reduce top spacing so form is visible above the fold */
+  .hero { padding: 24px 0 40px; }
 }
 @media (max-width: 540px) {
   .brand-mark { width: 52px; height: 52px; box-shadow: 3px 3px 0 var(--ink); }
@@ -598,12 +615,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Hero magazine spread -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
-      <h1 class="hero-title">
-        הלוואה <em>חכמה.</em><br>
-        לכל מטרה.
-      </h1>
+    <h1 class="hero-title">
+      הלוואה <em>חכמה.</em><br>
+      לכל מטרה.
+    </h1>
 
+    <div class="hero-body">
       <div class="lead-cols">
         <p>חכם קרדיט סורקת את עשרות גופי המימון המובילים בישראל, מנתחת את הפרופיל שלך, ומאתרת עבורך את ההצעה הנכונה ביותר — מבלי שתצטרך לרוץ בין בנקים, לחתום ניירות מיותרים או להתפשר על תנאים.</p>
         <p>התהליך מלא דיגיטלי, מאובטח, וללא עלות וללא התחייבות. נציג חוזר אליך עם הצעה מותאמת אישית, מבית הגוף הפיננסי הנכון עבורך.</p>
