@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A12">
+<title>חכם קרדיט — הלוואה חכמה לכל מטרה</title>
+<meta name="description" content="חכם קרדיט — מערכת התאמת הלוואות חכמה. השוואה אוטומטית בין עשרות גופי מימון, התאמה לפרופיל שלך תוך שניות.">
+<link rel="canonical" href="https://hahamcredit.com/">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Brand — Smart-AI Console */
+  --bg-0:        #0A0A12;   /* near-black with hint of blue */
+  --bg-1:        #14141F;
+  --bg-2:        #1E1E2D;
+  --bg-card:     #16162A;
+  --hairline:    rgba(255, 255, 255, .08);
+  --hairline-2:  rgba(255, 255, 255, .14);
+  --grid:        rgba(255, 255, 255, .03);
+
+  --magenta:     #FF1493;   /* brand hot pink */
+  --magenta-dk:  #D10E76;
+  --magenta-lt:  #FF4DAB;
+  --magenta-glow: rgba(255, 20, 147, .55);
+
+  --cyan:        #00E5FF;
+  --neon-line:   rgba(255, 20, 147, .35);
+
+  --ink-100:     #FFFFFF;
+  --ink-200:     #E6E8EE;
+  --ink-300:     #C4C7D6;
+  --ink-400:     #8B90A8;
+  --ink-500:     #5D6280;
+
+  --error:       #FF5466;
+  --success:     #00E5FF;
+
+  --mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  --sans: 'Heebo', system-ui, sans-serif;
+
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--ink-200);
+  background: var(--bg-0);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Global neural-network background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(ellipse 60% 35% at 80% 20%, var(--magenta-glow), transparent 60%),
+    radial-gradient(ellipse 40% 25% at 10% 90%, rgba(0, 229, 255, .15), transparent 60%);
+  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* —————————————————————————— Terminal status bar —————————————————————————— */
+.status-bar {
+  position: relative;
+  z-index: 5;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--hairline);
+  padding: 8px 24px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-300);
+  letter-spacing: .04em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.status-bar .left { display: inline-flex; align-items: center; gap: 16px; }
+.status-bar .led {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-bar .dot {
+  width: 7px; height: 7px;
+  background: var(--magenta);
+  border-radius: 999px;
+  box-shadow: 0 0 8px var(--magenta-glow);
+  animation: blink 2s infinite;
+}
+.status-bar .dot.cyan { background: var(--cyan); box-shadow: 0 0 8px rgba(0, 229, 255, .55); }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+.status-bar .right { font-family: var(--mono); }
+.status-bar .right span { color: var(--magenta-lt); }
+
+/* —————————————————————————— Header —————————————————————————— */
+.site-header {
+  position: relative;
+  z-index: 5;
+  padding: 28px 28px 0;
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+}
+.brand-logo {
+  height: 52px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 12px var(--magenta-glow));
+}
+.brand-meta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-400);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.brand-meta b { color: var(--magenta-lt); }
+
+/* —————————————————————————— Hero —————————————————————————— */
+.hero {
+  position: relative;
+  z-index: 5;
+  padding: 50px 28px 60px;
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* Code-style tag */
+.code-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--magenta-lt);
+  background: rgba(255, 20, 147, .08);
+  border: 1px solid rgba(255, 20, 147, .25);
+  border-inline-start: 3px solid var(--magenta);
+  padding: 8px 14px;
+  margin-bottom: 24px;
+  letter-spacing: .04em;
+}
+.code-tag::before {
+  content: ">";
+  color: var(--magenta);
+  font-weight: 700;
+}
+
+/* Big heading */
+h1.hero-title {
+  font-family: var(--sans);
+  font-weight: 900;
+  font-size: clamp(42px, 5.4vw, 68px);
+  line-height: .98;
+  letter-spacing: -0.035em;
+  color: var(--ink-100);
+  margin-bottom: 22px;
+}
+h1.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-lt) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+}
+h1.hero-title .cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.92em;
+  background: var(--magenta);
+  vertical-align: text-top;
+  animation: caret 1.05s steps(2, end) infinite;
+  margin-inline-start: 4px;
+  box-shadow: 0 0 12px var(--magenta-glow);
+}
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+.hero-sub {
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-300);
+  max-width: 500px;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+/* Data console — terminal-style stat list */
+.data-console {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-2);
+  border-radius: 8px;
+  padding: 18px 22px;
+  position: relative;
+  overflow: hidden;
+  max-width: 520px;
+}
+.data-console::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 28px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--hairline);
+}
+.data-console::after {
+  content: "● ● ●";
+  position: absolute;
+  top: 7px;
+  inset-inline-end: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .25em;
+  color: var(--ink-500);
+  z-index: 1;
+}
+.data-console .console-label {
+  position: absolute;
+  top: 6px;
+  inset-inline-start: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-400);
+  letter-spacing: .08em;
+  z-index: 1;
+}
+.data-rows {
+  margin-top: 24px;
+  display: grid;
+  gap: 10px;
+}
+.data-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-300);
+  padding: 4px 0;
+}
+.data-row .key {
+  color: var(--magenta-lt);
+  font-weight: 500;
+}
+.data-row .dots {
+  color: var(--ink-500);
+  letter-spacing: 0.4em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.data-row .val {
+  font-family: var(--sans);
+  color: var(--ink-100);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+}
+.data-row .val small { color: var(--magenta-lt); font-weight: 600; }
+
+/* —————————————————————————— Form panel —————————————————————————— */
+.form-panel {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-2);
+  border-radius: 12px;
+  padding: 34px 30px 28px;
+  box-shadow:
+    0 0 0 1px rgba(255, 20, 147, .08),
+    0 24px 60px -16px rgba(0, 0, 0, .55),
+    0 0 80px -20px rgba(255, 20, 147, .35);
+}
+.form-panel::before {
+  /* neon line on top */
+  content: "";
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 24px;
+  inset-inline-end: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--magenta) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--magenta-glow);
+}
+.form-panel::after {
+  /* bottom-left and top-right corner brackets */
+  content: "";
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  width: 14px; height: 14px;
+  border: 1px solid var(--magenta);
+  border-bottom: 0;
+  border-left: 0;
+  opacity: .8;
+}
+
+.form-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--magenta-lt);
+  background: rgba(255, 20, 147, .1);
+  border: 1px solid rgba(255, 20, 147, .25);
+  padding: 4px 10px;
+  margin-bottom: 14px;
+}
+.form-title {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+  color: var(--ink-100);
+  margin-bottom: 4px;
+}
+.form-sub {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-400);
+  margin-bottom: 22px;
+  letter-spacing: .02em;
+}
+
+.field { margin-bottom: 14px; }
+.field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--magenta-lt);
+  margin-bottom: 6px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.field label::before {
+  content: "// ";
+  color: var(--ink-500);
+}
+.field input[type="text"],
+.field input[type="tel"] {
+  width: 100%;
+  padding: 13px 14px;
+  font: 500 16px/1.4 var(--sans);
+  color: var(--ink-100);
+  background: var(--bg-0);
+  border: 1px solid var(--hairline-2);
+  border-radius: 6px;
+  outline: none;
+  transition: all .2s var(--ease);
+}
+.field input::placeholder { color: var(--ink-500); font-weight: 400; }
+.field input:focus {
+  border-color: var(--magenta);
+  background: var(--bg-1);
+  box-shadow: 0 0 0 4px rgba(255, 20, 147, .14), 0 0 20px rgba(255, 20, 147, .2);
+}
+.field-error {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 5px;
+  display: none;
+}
+.field-error::before { content: "! "; }
+.field-error.show { display: block; }
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0 4px;
+  font-size: 12.5px;
+  color: var(--ink-300);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.consent input[type="checkbox"] {
+  width: 17px; height: 17px;
+  margin-top: 2px;
+  accent-color: var(--magenta);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.consent a { color: var(--magenta-lt); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+.consent a:hover { color: var(--magenta); }
+.consent-required {
+  font-family: var(--mono);
+  color: var(--error);
+  font-size: 11.5px;
+  margin: 4px 0 0 26px;
+  display: none;
+}
+.consent-required.show { display: block; }
+
+.cta-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px 22px;
+  font: 800 15.5px/1 var(--sans);
+  letter-spacing: .01em;
+  color: var(--bg-0);
+  background: var(--magenta);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .2s var(--ease);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 0 0 1px var(--magenta), 0 10px 28px -6px var(--magenta-glow), 0 0 30px -8px var(--magenta-glow);
+  position: relative;
+  overflow: hidden;
+}
+.cta-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, .2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform .5s var(--ease);
+}
+.cta-btn .arr { font-family: var(--mono); font-size: 16px; transition: transform .2s var(--ease); }
+.cta-btn:hover:not(:disabled) {
+  background: var(--magenta-dk);
+  box-shadow: 0 0 0 1px var(--magenta-lt), 0 14px 36px -6px var(--magenta-glow), 0 0 50px -10px var(--magenta-glow);
+  transform: translateY(-1px);
+}
+.cta-btn:hover:not(:disabled)::before { transform: translateX(100%); }
+.cta-btn:hover:not(:disabled) .arr { transform: translateX(-3px); }
+.cta-btn:disabled {
+  background: var(--bg-2);
+  color: var(--ink-500);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.secure-line {
+  text-align: center;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: .04em;
+}
+.secure-line span { color: var(--magenta-lt); }
+
+/* —————————————————————————— Below-fold: "neural process" steps —————————————————————————— */
+.process {
+  position: relative;
+  z-index: 5;
+  padding: 30px 28px 50px;
+  background: var(--bg-1);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.process-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.process-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.process-head h2 {
+  font-family: var(--sans);
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: -0.025em;
+  color: var(--ink-100);
+}
+.process-head h2 em {
+  font-style: normal;
+  color: var(--magenta-lt);
+}
+.process-head .meta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-400);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  position: relative;
+}
+/* connecting line between nodes */
+.process-grid::before {
+  content: "";
+  position: absolute;
+  top: 32px;
+  left: 16%;
+  right: 16%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--neon-line) 30%, var(--neon-line) 70%, transparent 100%);
+  z-index: 0;
+}
+
+.node {
+  background: var(--bg-card);
+  border: 1px solid var(--hairline-2);
+  border-radius: 10px;
+  padding: 22px 22px 20px;
+  position: relative;
+  z-index: 1;
+  transition: all .25s var(--ease);
+}
+.node:hover {
+  border-color: var(--magenta);
+  box-shadow: 0 0 0 1px var(--magenta), 0 0 30px -10px var(--magenta-glow);
+}
+.node-orb {
+  position: absolute;
+  top: -16px;
+  inset-inline-start: 20px;
+  width: 36px; height: 36px;
+  background: var(--bg-0);
+  border: 2px solid var(--magenta);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--magenta-lt);
+  box-shadow: 0 0 12px var(--magenta-glow), inset 0 0 8px rgba(255, 20, 147, .2);
+}
+.node h3 {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink-100);
+  letter-spacing: -0.015em;
+  margin: 18px 0 6px;
+}
+.node p {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--ink-300);
+  line-height: 1.5;
+}
+.node .node-key {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-500);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* —————————————————————————— Footer —————————————————————————— */
+.foot {
+  position: relative;
+  z-index: 5;
+  background: var(--bg-0);
+  padding: 22px 28px;
+}
+.foot-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-500);
+  letter-spacing: .04em;
+}
+.foot-inner a {
+  color: var(--magenta-lt);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 20, 147, .25);
+  padding-bottom: 1px;
+}
+.foot-inner a:hover { color: var(--magenta); border-color: var(--magenta); }
+
+/* —————————————————————————— Mobile —————————————————————————— */
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 30px; padding: 0; }
+  .hero { padding: 32px 22px 40px; }
+  h1.hero-title { font-size: clamp(34px, 9vw, 50px); }
+  .form-panel { padding: 28px 22px; }
+  .process-grid { grid-template-columns: 1fr; gap: 22px; }
+  .process-grid::before { display: none; }
+}
+@media (max-width: 540px) {
+  .site-header { padding: 18px 20px 0; }
+  .brand-logo { height: 40px; }
+  .brand-meta { display: none; }
+  .status-bar .right { display: none; }
+  .form-title { font-size: 22px; }
+  .data-console { max-width: none; }
+  .process-head h2 { font-size: 22px; }
+}
+
+::selection { background: var(--magenta); color: var(--bg-0); }
+</style>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PZ84QRCB');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PZ84QRCB"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="status-bar">
+  <span class="left">
+    <span class="led"><span class="dot"></span> SYSTEM ONLINE</span>
+    <span class="led"><span class="dot cyan"></span> 12+ LENDERS</span>
+  </span>
+  <span class="right">v1.0 · ‎<span>SSL 256-bit</span></span>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="חכם קרדיט — דף הבית">
+      <img src="/assets/logo-wordmark.png" alt="חכם קרדיט" class="brand-logo">
+    </a>
+    <span class="brand-meta">// <b>BDIKAT_ZACHAUT</b> · ‎פחות מדקה</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="code-tag">SMART CREDIT // הלוואה חכמה לכל מטרה</span>
+      <h1 class="hero-title">
+        הלוואה <em>חכמה</em>.<br>
+        מותאמת אישית לך<span class="cursor" aria-hidden="true"></span>
+      </h1>
+      <p class="hero-sub">
+        המערכת שלנו סורקת את עשרות גופי המימון המובילים בישראל, מנתחת את הפרופיל שלך, ומאתרת את ההצעה הנכונה ביותר — תוך פחות מ-24 שעות.
+      </p>
+
+      <div class="data-console" aria-hidden="true">
+        <span class="console-label">DATA_FEED.LIVE</span>
+        <div class="data-rows">
+          <div class="data-row">
+            <span class="key">max_amount</span>
+            <span class="dots">.................</span>
+            <span class="val">3,000,000<small> ₪</small></span>
+          </div>
+          <div class="data-row">
+            <span class="key">lenders</span>
+            <span class="dots">.................</span>
+            <span class="val">12<small>+</small></span>
+          </div>
+          <div class="data-row">
+            <span class="key">response_time</span>
+            <span class="dots">.................</span>
+            <span class="val">~24<small> hrs</small></span>
+          </div>
+          <div class="data-row">
+            <span class="key">credit_status</span>
+            <span class="dots">.................</span>
+            <span class="val">ANY<small> · גם בעייתי</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="form-panel" aria-labelledby="formTitle">
+      <span class="form-tag">[ INIT // 01_LEAD_CAPTURE ]</span>
+      <h2 class="form-title" id="formTitle">השאר פרטים</h2>
+      <p class="form-sub">// פחות מדקה · ‎ללא עלות · ‎ללא התחייבות</p>
+
+      <div class="field">
+        <label for="nameInput">שם מלא</label>
+        <input type="text" id="nameInput" autocomplete="name" placeholder="ישראל ישראלי" required>
+        <div class="field-error" id="nameError">נא להזין שם מלא</div>
+      </div>
+
+      <div class="field">
+        <label for="phoneInput">טלפון נייד</label>
+        <input type="tel" id="phoneInput" inputmode="numeric" autocomplete="tel" placeholder="0501234567" maxlength="10" dir="rtl" required>
+        <div class="field-error" id="phoneError">נא להזין מספר טלפון תקין</div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consentBox" value="כן">
+        <span>אני מסכימ/ה ל<a href="/privacy-policy/" target="_blank">תנאי השימוש ומדיניות הפרטיות</a> באתר</span>
+      </label>
+      <div class="consent-required" id="consentError">חובה לאשר את תנאי השימוש כדי להמשיך</div>
+
+      <label class="consent" style="margin-top: 4px;">
+        <input type="checkbox" id="marketingBox" value="כן">
+        <span>אני מסכים/ה לקבל פרסומים שיווקיים מחכם קרדיט</span>
+      </label>
+
+      <button class="cta-btn" id="submitBtn" disabled>
+        הפעל בדיקה
+        <span class="arr">$ →</span>
+      </button>
+
+      <p class="secure-line">// מוצפן ומאובטח · ‎<span>SSL 256</span></p>
+    </aside>
+  </div>
+</section>
+
+<!-- Process / neural nodes -->
+<section class="process">
+  <div class="process-inner">
+    <div class="process-head">
+      <h2>איך זה <em>עובד.</em></h2>
+      <span class="meta">// 3 NODES · NEURAL_FLOW</span>
+    </div>
+    <div class="process-grid">
+      <div class="node">
+        <span class="node-orb">01</span>
+        <h3>השאר פרטים</h3>
+        <p>שני שדות, פחות מדקה. המידע נשלח מוצפן ישירות למערכת.</p>
+        <div class="node-key">INPUT_NODE</div>
+      </div>
+      <div class="node">
+        <span class="node-orb">02</span>
+        <h3>סקירה חכמה</h3>
+        <p>המערכת סורקת עשרות גופי מימון ומבצעת חישוב התאמה בזמן אמת.</p>
+        <div class="node-key">ANALYSIS_NODE</div>
+      </div>
+      <div class="node">
+        <span class="node-orb">03</span>
+        <h3>הצעה אישית</h3>
+        <p>נציג חוזר אליך עם ההצעה המתאימה ביותר — ‎ללא התחייבות.</p>
+        <div class="node-key">OUTPUT_NODE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>© hahamcredit.com — כל הזכויות שמורות</span>
+    <a href="/privacy-policy/" rel="noopener">תנאי שימוש ומדיניות פרטיות</a>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+(function ($) {
+  var $name = $('#nameInput');
+  var $phone = $('#phoneInput');
+  var $consent = $('#consentBox');
+  var $marketing = $('#marketingBox');
+  var $submit = $('#submitBtn');
+  var $nameErr = $('#nameError');
+  var $phoneErr = $('#phoneError');
+  var $consentErr = $('#consentError');
+
+  function validPhone(v) {
+    var digits = String(v).replace(/\D/g, '');
+    return /^0\d{8,9}$/.test(digits);
+  }
+  function validName(v) { return String(v).trim().length >= 2; }
+  function update() {
+    var ok = validName($name.val()) && validPhone($phone.val()) && $consent.is(':checked');
+    $submit.prop('disabled', !ok);
+  }
+  $name.on('input', function () { $nameErr.removeClass('show'); update(); });
+  $phone.on('input', function () { $phoneErr.removeClass('show'); update(); });
+  $consent.on('change', function () { $consentErr.removeClass('show'); update(); });
+
+  function getUTMParams() {
+    var qs = new URLSearchParams(window.location.search);
+    var p = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function (k) {
+      var v = qs.get(k);
+      if (v) p[k] = v;
+    });
+    return p;
+  }
+
+  $submit.on('click', function (e) {
+    e.preventDefault();
+    var name  = $name.val().trim();
+    var phone = $phone.val().trim();
+    var nameOk = validName(name), phoneOk = validPhone(phone), consentOk = $consent.is(':checked');
+    if (!nameOk)    $nameErr.addClass('show');
+    if (!phoneOk)   $phoneErr.addClass('show');
+    if (!consentOk) $consentErr.addClass('show');
+    if (!nameOk || !phoneOk || !consentOk) return;
+
+    $submit.prop('disabled', true).html('// מעבד&hellip;');
+
+    var formData = {
+      name: name,
+      phone: phone,
+      source: window.location.hostname,
+      fld_228371: $consent.is(':checked')   ? 'כן' : '',
+      fld_331359: $marketing.is(':checked') ? 'כן' : ''
+    };
+    Object.assign(formData, getUTMParams());
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'lead', name: name, phone: phone });
+
+    var qs = Object.keys(formData)
+      .map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(formData[k]); })
+      .join('&');
+    var webhookUrl = 'https://proxy.leadim.xyz/APIProxy/global/submit.cors.v2.ashx?lm_form=49502&lm_key=61cae16fb0&' + qs;
+
+    $.ajax({
+      url: webhookUrl,
+      type: 'POST',
+      success: function (responseText) {
+        try {
+          var resp = (typeof responseText === 'string') ? JSON.parse(responseText) : responseText;
+          if (resp && typeof resp.result !== 'undefined') {
+            window.location.href = '/quiz/?response=' + resp.result
+              + '&name=' + encodeURIComponent(name)
+              + '&phone=' + encodeURIComponent(phone);
+            return;
+          }
+        } catch (e) {}
+        $submit.prop('disabled', false).html('הפעל בדיקה <span class="arr">$ →</span>');
+        alert('שגיאה בשליחה — נסה שוב');
+      },
+      error: function () {
+        $submit.prop('disabled', false).html('הפעל בדיקה <span class="arr">$ →</span>');
+        alert('שליחה לשרת נכשלה — אנא נסה שוב');
+      }
+    });
+  });
+})(jQuery);
+</script>
+<script src="/assets/cookie-banner.js" defer></script>
+</body>
+</html>

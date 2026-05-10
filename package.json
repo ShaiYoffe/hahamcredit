@@ -1,0 +1,14 @@
+{
+  "name": "hahamcredit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "hahamcredit.com / חכם קרדיט — Smart-AI console lead funnel + Supabase route_adv safety-net",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel deploy --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.6"
+  }
+}
