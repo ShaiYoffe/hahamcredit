@@ -3,46 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A0A12">
+<meta name="theme-color" content="#FFE9F3">
 <title>חכם קרדיט — הלוואה חכמה לכל מטרה</title>
-<meta name="description" content="חכם קרדיט — מערכת התאמת הלוואות חכמה. השוואה אוטומטית בין עשרות גופי מימון, התאמה לפרופיל שלך תוך שניות.">
+<meta name="description" content="חכם קרדיט — התאמת הלוואה אישית מקבוצה של עשרות גופי מימון מובילים. תהליך אנושי, אנליטי, מותאם אישית.">
 <link rel="canonical" href="https://hahamcredit.com/">
 <link rel="icon" type="image/png" href="/assets/logo.png">
 <link rel="apple-touch-icon" href="/assets/logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bellefair&family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  /* Brand — Smart-AI Console */
-  --bg-0:        #0A0A12;   /* near-black with hint of blue */
-  --bg-1:        #14141F;
-  --bg-2:        #1E1E2D;
-  --bg-card:     #16162A;
-  --hairline:    rgba(255, 255, 255, .08);
-  --hairline-2:  rgba(255, 255, 255, .14);
-  --grid:        rgba(255, 255, 255, .03);
+  /* Brand — Editorial Pink Magazine */
+  --blush:       #FFE9F3;    /* light pink page bg */
+  --blush-2:     #FFD9E9;
+  --paper:       #FFFFFF;
+  --cream-warm:  #FFF8FB;
 
-  --magenta:     #FF1493;   /* brand hot pink */
-  --magenta-dk:  #D10E76;
-  --magenta-lt:  #FF4DAB;
-  --magenta-glow: rgba(255, 20, 147, .55);
+  --magenta:     #FF1493;    /* brand hot pink */
+  --magenta-dk:  #A00A60;
+  --wine:        #5C0533;    /* dark wine */
 
-  --cyan:        #00E5FF;
-  --neon-line:   rgba(255, 20, 147, .35);
+  --ink:         #1F0B2A;    /* deep wine-black */
+  --ink-soft:    #4A2843;
+  --ink-mute:    #8A6E80;
 
-  --ink-100:     #FFFFFF;
-  --ink-200:     #E6E8EE;
-  --ink-300:     #C4C7D6;
-  --ink-400:     #8B90A8;
-  --ink-500:     #5D6280;
+  --gold:        #C99654;    /* subtle warm gold */
+  --hairline:    #F4CCDC;
+  --hairline-2:  #E89BBC;
 
-  --error:       #FF5466;
-  --success:     #00E5FF;
-
-  --mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  --error:       #C5302C;
+  --serif: 'Bellefair', 'David Libre', 'Times New Roman', serif;
   --sans: 'Heebo', system-ui, sans-serif;
 
   --ease: cubic-bezier(.22, 1, .36, 1);
@@ -53,76 +46,70 @@ html, body { min-height: 100%; }
 body {
   font-family: var(--sans);
   font-weight: 400;
-  color: var(--ink-200);
-  background: var(--bg-0);
+  color: var(--ink);
+  background: var(--blush);
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  position: relative;
 }
 
-/* Global neural-network background */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    radial-gradient(ellipse 60% 35% at 80% 20%, var(--magenta-glow), transparent 60%),
-    radial-gradient(ellipse 40% 25% at 10% 90%, rgba(0, 229, 255, .15), transparent 60%);
-  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
-  pointer-events: none;
-  z-index: 0;
+/* —————————————————————————— Magazine masthead bar —————————————————————————— */
+.masthead {
+  border-bottom: 1px solid var(--hairline-2);
+  padding: 14px 0;
 }
-
-/* —————————————————————————— Terminal status bar —————————————————————————— */
-.status-bar {
-  position: relative;
-  z-index: 5;
-  background: var(--bg-1);
-  border-bottom: 1px solid var(--hairline);
-  padding: 8px 24px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-300);
-  letter-spacing: .04em;
+.mast-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: .06em;
+  color: var(--wine);
 }
-.status-bar .left { display: inline-flex; align-items: center; gap: 16px; }
-.status-bar .led {
+.mast-left,
+.mast-right {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 22px;
 }
-.status-bar .dot {
-  width: 7px; height: 7px;
+.mast-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mast-item .dot {
+  width: 5px; height: 5px;
   background: var(--magenta);
   border-radius: 999px;
-  box-shadow: 0 0 8px var(--magenta-glow);
-  animation: blink 2s infinite;
 }
-.status-bar .dot.cyan { background: var(--cyan); box-shadow: 0 0 8px rgba(0, 229, 255, .55); }
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .4; }
+.mast-volume {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  background: var(--paper);
+  border: 1px solid var(--magenta);
+  padding: 4px 10px;
+  border-radius: 999px;
 }
-.status-bar .right { font-family: var(--mono); }
-.status-bar .right span { color: var(--magenta-lt); }
 
-/* —————————————————————————— Header —————————————————————————— */
+/* —————————————————————————— Header — wordmark + brain badge —————————————————————————— */
 .site-header {
-  position: relative;
-  z-index: 5;
-  padding: 28px 28px 0;
+  border-bottom: 2px solid var(--ink);
+  background: var(--blush);
 }
 .header-inner {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 28px 36px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -131,485 +118,390 @@ body::before {
 .brand {
   display: inline-flex;
   align-items: center;
+  gap: 16px;
   text-decoration: none;
-  line-height: 0;
+  color: var(--ink);
+  line-height: 1;
 }
-.brand-logo {
-  height: 52px;
-  width: auto;
+.brand-mark {
+  width: 64px; height: 64px;
+  background: url('/assets/logo.png') center/68% no-repeat, var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 var(--ink);
+  flex-shrink: 0;
+}
+.brand-wordmark {
+  font-family: var(--serif);
+  font-size: 38px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+.brand-tagline {
   display: block;
-  filter: drop-shadow(0 0 12px var(--magenta-glow));
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-top: 6px;
+  letter-spacing: .04em;
 }
-.brand-meta {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-400);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.brand-meta b { color: var(--magenta-lt); }
 
-/* —————————————————————————— Hero —————————————————————————— */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink);
+  color: var(--blush);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background .2s var(--ease);
+}
+.nav-cta:hover { background: var(--magenta-dk); }
+.nav-cta .arr { font-family: var(--serif); font-size: 16px; }
+
+/* —————————————————————————— HERO — magazine spread —————————————————————————— */
 .hero {
   position: relative;
-  z-index: 5;
-  padding: 50px 28px 60px;
+  padding: 50px 0 60px;
 }
 .hero-inner {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 36px;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 50px;
-  align-items: center;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 70px;
+  align-items: start;
+  position: relative;
 }
 
-/* Code-style tag */
-.code-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--magenta-lt);
-  background: rgba(255, 20, 147, .08);
-  border: 1px solid rgba(255, 20, 147, .25);
-  border-inline-start: 3px solid var(--magenta);
-  padding: 8px 14px;
-  margin-bottom: 24px;
-  letter-spacing: .04em;
-}
-.code-tag::before {
-  content: ">";
-  color: var(--magenta);
-  font-weight: 700;
+.hero-text {
+  position: relative;
 }
 
-/* Big heading */
+/* HUGE serif headline */
 h1.hero-title {
-  font-family: var(--sans);
-  font-weight: 900;
-  font-size: clamp(42px, 5.4vw, 68px);
-  line-height: .98;
-  letter-spacing: -0.035em;
-  color: var(--ink-100);
-  margin-bottom: 22px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(58px, 8vw, 124px);
+  line-height: .92;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 28px;
 }
 h1.hero-title em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-lt) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-style: italic;
+  color: var(--magenta);
   position: relative;
-}
-h1.hero-title .cursor {
   display: inline-block;
-  width: 0.5em;
-  height: 0.92em;
+}
+h1.hero-title em::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 8%;
+  height: 5px;
   background: var(--magenta);
-  vertical-align: text-top;
-  animation: caret 1.05s steps(2, end) infinite;
-  margin-inline-start: 4px;
-  box-shadow: 0 0 12px var(--magenta-glow);
-}
-@keyframes caret {
-  50% { opacity: 0; }
+  border-radius: 999px;
 }
 
-.hero-sub {
-  font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--ink-300);
-  max-width: 500px;
+/* lead paragraph in two columns (newspaper feel) */
+.lead-cols {
+  column-count: 2;
+  column-gap: 28px;
+  column-rule: 1px solid var(--hairline-2);
   margin-bottom: 32px;
-  font-weight: 400;
+  max-width: 640px;
 }
-
-/* Data console — terminal-style stat list */
-.data-console {
-  background: var(--bg-card);
-  border: 1px solid var(--hairline-2);
-  border-radius: 8px;
-  padding: 18px 22px;
-  position: relative;
-  overflow: hidden;
-  max-width: 520px;
-}
-.data-console::before {
-  content: "";
-  position: absolute;
-  top: 0; right: 0; left: 0;
-  height: 28px;
-  background: var(--bg-1);
-  border-bottom: 1px solid var(--hairline);
-}
-.data-console::after {
-  content: "● ● ●";
-  position: absolute;
-  top: 7px;
-  inset-inline-end: 12px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .25em;
-  color: var(--ink-500);
-  z-index: 1;
-}
-.data-console .console-label {
-  position: absolute;
-  top: 6px;
-  inset-inline-start: 14px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-400);
-  letter-spacing: .08em;
-  z-index: 1;
-}
-.data-rows {
-  margin-top: 24px;
-  display: grid;
-  gap: 10px;
-}
-.data-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 14px;
-  align-items: baseline;
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ink-300);
-  padding: 4px 0;
-}
-.data-row .key {
-  color: var(--magenta-lt);
-  font-weight: 500;
-}
-.data-row .dots {
-  color: var(--ink-500);
-  letter-spacing: 0.4em;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.data-row .val {
+.lead-cols p {
   font-family: var(--sans);
-  color: var(--ink-100);
-  font-weight: 800;
   font-size: 15px;
-  letter-spacing: -0.005em;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  font-weight: 400;
+  break-inside: avoid;
 }
-.data-row .val small { color: var(--magenta-lt); font-weight: 600; }
+.lead-cols p:first-child::first-letter {
+  font-family: var(--serif);
+  font-size: 58px;
+  font-weight: 400;
+  line-height: 1;
+  float: right;
+  margin: 2px 0 0 8px;
+  color: var(--magenta);
+  padding: 0 4px;
+}
 
-/* —————————————————————————— Form panel —————————————————————————— */
-.form-panel {
+/* numbered features (3-up below headline) */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+  border-top: 1px solid var(--ink);
+  padding-top: 28px;
+}
+.feature {
   position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--hairline-2);
-  border-radius: 12px;
-  padding: 34px 30px 28px;
-  box-shadow:
-    0 0 0 1px rgba(255, 20, 147, .08),
-    0 24px 60px -16px rgba(0, 0, 0, .55),
-    0 0 80px -20px rgba(255, 20, 147, .35);
 }
-.form-panel::before {
-  /* neon line on top */
-  content: "";
-  position: absolute;
-  top: -1px;
-  inset-inline-start: 24px;
-  inset-inline-end: 24px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, var(--magenta) 50%, transparent 100%);
-  box-shadow: 0 0 12px var(--magenta-glow);
+.feature .ft-num {
+  font-family: var(--serif);
+  font-size: 38px;
+  line-height: 1;
+  color: var(--magenta);
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
 }
-.form-panel::after {
-  /* bottom-left and top-right corner brackets */
-  content: "";
-  position: absolute;
-  top: 10px;
-  inset-inline-end: 10px;
-  width: 14px; height: 14px;
-  border: 1px solid var(--magenta);
-  border-bottom: 0;
-  border-left: 0;
-  opacity: .8;
+.feature h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.feature p {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 28ch;
 }
 
-.form-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: 11px;
+/* —————————————————————————— Form panel (column 2) —————————————————————————— */
+.form-aside {
+  position: relative;
+  padding-top: 14px;
+}
+.form-panel {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  padding: 38px 32px 30px;
+  position: relative;
+  box-shadow: 8px 8px 0 var(--magenta);
+}
+
+/* decoration: corner stamp with "ISSUE №" style */
+.form-stamp {
+  position: absolute;
+  top: -22px;
+  inset-inline-start: 26px;
+  background: var(--magenta);
+  color: var(--paper);
+  padding: 6px 14px;
+  font-family: var(--serif);
+  font-size: 14px;
+  letter-spacing: .04em;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  z-index: 2;
+}
+
+.form-byline {
+  font-family: var(--serif);
+  font-size: 13.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--magenta-lt);
-  background: rgba(255, 20, 147, .1);
-  border: 1px solid rgba(255, 20, 147, .25);
-  padding: 4px 10px;
-  margin-bottom: 14px;
+  color: var(--magenta-dk);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--hairline-2);
+  padding-bottom: 8px;
 }
 .form-title {
-  font-family: var(--sans);
-  font-weight: 800;
-  font-size: 26px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 38px;
   letter-spacing: -0.022em;
-  line-height: 1.15;
-  color: var(--ink-100);
-  margin-bottom: 4px;
+  line-height: 1.0;
+  color: var(--ink);
+  margin-bottom: 6px;
 }
 .form-sub {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ink-400);
-  margin-bottom: 22px;
-  letter-spacing: .02em;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-mute);
+  margin-bottom: 24px;
+  font-weight: 500;
 }
 
 .field { margin-bottom: 14px; }
 .field label {
   display: block;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
-  font-weight: 500;
-  color: var(--magenta-lt);
+  font-weight: 800;
+  color: var(--magenta-dk);
   margin-bottom: 6px;
-  letter-spacing: .08em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-}
-.field label::before {
-  content: "// ";
-  color: var(--ink-500);
 }
 .field input[type="text"],
 .field input[type="tel"] {
   width: 100%;
-  padding: 13px 14px;
-  font: 500 16px/1.4 var(--sans);
-  color: var(--ink-100);
-  background: var(--bg-0);
-  border: 1px solid var(--hairline-2);
-  border-radius: 6px;
+  padding: 14px 0 10px;
+  font: 500 18px/1.4 var(--serif);
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
   outline: none;
   transition: all .2s var(--ease);
 }
-.field input::placeholder { color: var(--ink-500); font-weight: 400; }
+.field input::placeholder { color: var(--ink-mute); font-style: italic; }
 .field input:focus {
-  border-color: var(--magenta);
-  background: var(--bg-1);
-  box-shadow: 0 0 0 4px rgba(255, 20, 147, .14), 0 0 20px rgba(255, 20, 147, .2);
+  border-bottom-color: var(--magenta);
+  padding-bottom: 12px;
+  border-bottom-width: 3px;
 }
 .field-error {
-  font-family: var(--mono);
-  font-size: 12px;
+  font-family: var(--sans);
+  font-size: 12.5px;
   color: var(--error);
   margin-top: 5px;
   display: none;
+  font-weight: 600;
 }
-.field-error::before { content: "! "; }
 .field-error.show { display: block; }
 
 .consent {
   display: flex;
   align-items: flex-start;
   gap: 9px;
-  margin: 12px 0 4px;
+  margin: 14px 0 4px;
+  font-family: var(--sans);
   font-size: 12.5px;
-  color: var(--ink-300);
+  color: var(--ink-soft);
   line-height: 1.5;
   cursor: pointer;
 }
 .consent input[type="checkbox"] {
-  width: 17px; height: 17px;
-  margin-top: 2px;
+  width: 16px; height: 16px;
+  margin-top: 3px;
   accent-color: var(--magenta);
   flex-shrink: 0;
   cursor: pointer;
 }
-.consent a { color: var(--magenta-lt); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+.consent a { color: var(--magenta-dk); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .consent a:hover { color: var(--magenta); }
 .consent-required {
-  font-family: var(--mono);
+  font-family: var(--sans);
   color: var(--error);
   font-size: 11.5px;
   margin: 4px 0 0 26px;
   display: none;
+  font-weight: 600;
 }
 .consent-required.show { display: block; }
 
 .cta-btn {
   width: 100%;
-  margin-top: 18px;
-  padding: 15px 22px;
-  font: 800 15.5px/1 var(--sans);
-  letter-spacing: .01em;
-  color: var(--bg-0);
-  background: var(--magenta);
+  margin-top: 20px;
+  padding: 16px 22px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: 0;
+  color: var(--blush);
+  background: var(--ink);
   border: 0;
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
   transition: all .2s var(--ease);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  box-shadow: 0 0 0 1px var(--magenta), 0 10px 28px -6px var(--magenta-glow), 0 0 30px -8px var(--magenta-glow);
+  gap: 12px;
   position: relative;
-  overflow: hidden;
 }
-.cta-btn::before {
+.cta-btn::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, .2) 50%, transparent 100%);
-  transform: translateX(-100%);
-  transition: transform .5s var(--ease);
+  inset: 4px;
+  border: 1px solid var(--blush);
+  opacity: .35;
+  pointer-events: none;
+  transition: opacity .2s var(--ease);
 }
-.cta-btn .arr { font-family: var(--mono); font-size: 16px; transition: transform .2s var(--ease); }
+.cta-btn .arr { font-family: var(--serif); font-size: 22px; transition: transform .2s var(--ease); }
 .cta-btn:hover:not(:disabled) {
-  background: var(--magenta-dk);
-  box-shadow: 0 0 0 1px var(--magenta-lt), 0 14px 36px -6px var(--magenta-glow), 0 0 50px -10px var(--magenta-glow);
-  transform: translateY(-1px);
+  background: var(--magenta);
+  color: var(--paper);
 }
-.cta-btn:hover:not(:disabled)::before { transform: translateX(100%); }
-.cta-btn:hover:not(:disabled) .arr { transform: translateX(-3px); }
+.cta-btn:hover:not(:disabled)::after { opacity: .6; }
+.cta-btn:hover:not(:disabled) .arr { transform: translateX(-4px); }
 .cta-btn:disabled {
-  background: var(--bg-2);
-  color: var(--ink-500);
-  box-shadow: none;
+  background: var(--ink-mute);
+  color: var(--blush-2);
   cursor: not-allowed;
 }
 
 .secure-line {
   text-align: center;
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-500);
+  margin-top: 14px;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--ink-mute);
   letter-spacing: .04em;
+  font-style: italic;
 }
-.secure-line span { color: var(--magenta-lt); }
 
-/* —————————————————————————— Below-fold: "neural process" steps —————————————————————————— */
-.process {
-  position: relative;
-  z-index: 5;
-  padding: 30px 28px 50px;
-  background: var(--bg-1);
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+/* —————————————————————————— Stat ribbon —————————————————————————— */
+.ribbon {
+  background: var(--ink);
+  color: var(--blush);
+  padding: 22px 0;
+  border-top: 4px double var(--magenta);
+  border-bottom: 4px double var(--magenta);
 }
-.process-inner {
+.ribbon-inner {
   max-width: 1280px;
   margin: 0 auto;
-}
-.process-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 28px;
-}
-.process-head h2 {
-  font-family: var(--sans);
-  font-weight: 900;
-  font-size: 28px;
-  letter-spacing: -0.025em;
-  color: var(--ink-100);
-}
-.process-head h2 em {
-  font-style: normal;
-  color: var(--magenta-lt);
-}
-.process-head .meta {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-400);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.process-grid {
+  padding: 0 36px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  position: relative;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
-/* connecting line between nodes */
-.process-grid::before {
-  content: "";
-  position: absolute;
-  top: 32px;
-  left: 16%;
-  right: 16%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--neon-line) 30%, var(--neon-line) 70%, transparent 100%);
-  z-index: 0;
+.ribbon-cell {
+  text-align: center;
+  border-inline-start: 1px solid rgba(255, 233, 243, .15);
+  padding-inline-start: 22px;
 }
-
-.node {
-  background: var(--bg-card);
-  border: 1px solid var(--hairline-2);
-  border-radius: 10px;
-  padding: 22px 22px 20px;
-  position: relative;
-  z-index: 1;
-  transition: all .25s var(--ease);
+.ribbon-cell:first-child { border-inline-start: 0; padding-inline-start: 0; }
+.ribbon-cell .r-val {
+  display: block;
+  font-family: var(--serif);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--blush);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
 }
-.node:hover {
-  border-color: var(--magenta);
-  box-shadow: 0 0 0 1px var(--magenta), 0 0 30px -10px var(--magenta-glow);
-}
-.node-orb {
-  position: absolute;
-  top: -16px;
-  inset-inline-start: 20px;
-  width: 36px; height: 36px;
-  background: var(--bg-0);
-  border: 2px solid var(--magenta);
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--magenta-lt);
-  box-shadow: 0 0 12px var(--magenta-glow), inset 0 0 8px rgba(255, 20, 147, .2);
-}
-.node h3 {
+.ribbon-cell .r-val small { font-size: 18px; color: var(--magenta); margin-inline-end: 2px; }
+.ribbon-cell .r-lbl {
   font-family: var(--sans);
-  font-weight: 800;
-  font-size: 17px;
-  color: var(--ink-100);
-  letter-spacing: -0.015em;
-  margin: 18px 0 6px;
-}
-.node p {
-  font-family: var(--sans);
-  font-size: 13.5px;
-  color: var(--ink-300);
-  line-height: 1.5;
-}
-.node .node-key {
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--ink-500);
-  letter-spacing: .06em;
+  font-size: 11.5px;
+  letter-spacing: .16em;
   text-transform: uppercase;
+  color: rgba(255, 233, 243, .7);
+  font-weight: 600;
 }
 
 /* —————————————————————————— Footer —————————————————————————— */
 .foot {
-  position: relative;
-  z-index: 5;
-  background: var(--bg-0);
-  padding: 22px 28px;
+  background: var(--blush);
+  padding: 26px 36px;
+  text-align: center;
 }
 .foot-inner {
   max-width: 1280px;
@@ -619,39 +511,44 @@ h1.hero-title .cursor {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-500);
-  letter-spacing: .04em;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--ink-mute);
 }
 .foot-inner a {
-  color: var(--magenta-lt);
+  color: var(--magenta-dk);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 20, 147, .25);
+  border-bottom: 1px solid var(--hairline-2);
   padding-bottom: 1px;
+  letter-spacing: .02em;
 }
 .foot-inner a:hover { color: var(--magenta); border-color: var(--magenta); }
 
 /* —————————————————————————— Mobile —————————————————————————— */
 @media (max-width: 980px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 30px; padding: 0; }
-  .hero { padding: 32px 22px 40px; }
-  h1.hero-title { font-size: clamp(34px, 9vw, 50px); }
-  .form-panel { padding: 28px 22px; }
-  .process-grid { grid-template-columns: 1fr; gap: 22px; }
-  .process-grid::before { display: none; }
+  .mast-right { display: none; }
+  .header-inner { padding: 22px 22px 18px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 36px; padding: 0 22px; }
+  h1.hero-title { font-size: clamp(46px, 11vw, 80px); }
+  .lead-cols { column-count: 1; }
+  .features { grid-template-columns: 1fr; gap: 22px; }
+  .feature { padding-top: 14px; border-top: 1px solid var(--hairline-2); }
+  .feature:first-child { padding-top: 0; border-top: 0; }
+  .form-aside { padding-top: 0; }
+  .form-panel { box-shadow: 5px 5px 0 var(--magenta); padding: 30px 22px 24px; }
+  .ribbon-inner { grid-template-columns: 1fr 1fr; gap: 18px; padding: 0 22px; }
+  .ribbon-cell { border-inline-start: 0; padding-inline-start: 0; }
 }
 @media (max-width: 540px) {
-  .site-header { padding: 18px 20px 0; }
-  .brand-logo { height: 40px; }
-  .brand-meta { display: none; }
-  .status-bar .right { display: none; }
-  .form-title { font-size: 22px; }
-  .data-console { max-width: none; }
-  .process-head h2 { font-size: 22px; }
+  .brand-mark { width: 52px; height: 52px; box-shadow: 3px 3px 0 var(--ink); }
+  .brand-wordmark { font-size: 30px; }
+  .brand-tagline { font-size: 11px; }
+  .nav-cta { padding: 9px 14px; font-size: 12px; }
+  .form-title { font-size: 30px; }
+  .ribbon-cell .r-val { font-size: 24px; }
 }
 
-::selection { background: var(--magenta); color: var(--bg-0); }
+::selection { background: var(--magenta); color: var(--blush); }
 </style>
 
 <!-- Google Tag Manager -->
@@ -668,133 +565,135 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="status-bar">
-  <span class="left">
-    <span class="led"><span class="dot"></span> SYSTEM ONLINE</span>
-    <span class="led"><span class="dot cyan"></span> 12+ LENDERS</span>
-  </span>
-  <span class="right">v1.0 · ‎<span>SSL 256-bit</span></span>
+<!-- magazine masthead -->
+<div class="masthead">
+  <div class="mast-inner">
+    <span class="mast-left">
+      <span class="mast-item"><span class="dot"></span> חכם קרדיט · ‎הלוואה חכמה</span>
+      <span class="mast-volume">ISSUE №01</span>
+    </span>
+    <span class="mast-right">
+      <span class="mast-item">SSL 256-bit · ‎מאובטח</span>
+    </span>
+  </div>
 </div>
 
+<!-- header / wordmark -->
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="חכם קרדיט — דף הבית">
-      <img src="/assets/logo-wordmark.png" alt="חכם קרדיט" class="brand-logo">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>
+        <span class="brand-wordmark">חכם קרדיט</span>
+        <span class="brand-tagline">— Smart Credit · ‎הלוואה חכמה לכל מטרה —</span>
+      </span>
     </a>
-    <span class="brand-meta">// <b>BDIKAT_ZACHAUT</b> · ‎פחות מדקה</span>
+    <a href="#form" class="nav-cta">
+      בדיקת זכאות
+      <span class="arr">←</span>
+    </a>
   </div>
 </header>
 
+<!-- Hero magazine spread -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <span class="code-tag">SMART CREDIT // הלוואה חכמה לכל מטרה</span>
       <h1 class="hero-title">
-        הלוואה <em>חכמה</em>.<br>
-        מותאמת אישית לך<span class="cursor" aria-hidden="true"></span>
+        הלוואה <em>חכמה.</em><br>
+        אישית, בלי טעויות.
       </h1>
-      <p class="hero-sub">
-        המערכת שלנו סורקת את עשרות גופי המימון המובילים בישראל, מנתחת את הפרופיל שלך, ומאתרת את ההצעה הנכונה ביותר — תוך פחות מ-24 שעות.
-      </p>
 
-      <div class="data-console" aria-hidden="true">
-        <span class="console-label">DATA_FEED.LIVE</span>
-        <div class="data-rows">
-          <div class="data-row">
-            <span class="key">max_amount</span>
-            <span class="dots">.................</span>
-            <span class="val">3,000,000<small> ₪</small></span>
-          </div>
-          <div class="data-row">
-            <span class="key">lenders</span>
-            <span class="dots">.................</span>
-            <span class="val">12<small>+</small></span>
-          </div>
-          <div class="data-row">
-            <span class="key">response_time</span>
-            <span class="dots">.................</span>
-            <span class="val">~24<small> hrs</small></span>
-          </div>
-          <div class="data-row">
-            <span class="key">credit_status</span>
-            <span class="dots">.................</span>
-            <span class="val">ANY<small> · גם בעייתי</small></span>
-          </div>
+      <div class="lead-cols">
+        <p>חכם קרדיט סורקת את עשרות גופי המימון המובילים בישראל, מנתחת את הפרופיל שלך, ומאתרת עבורך את ההצעה הנכונה ביותר — מבלי שתצטרך לרוץ בין בנקים, לחתום ניירות מיותרים או להתפשר על תנאים.</p>
+        <p>התהליך מלא דיגיטלי, מאובטח, וללא עלות וללא התחייבות. נציג חוזר אליך עם הצעה מותאמת אישית, מבית הגוף הפיננסי הנכון עבורך.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <span class="ft-num">01</span>
+          <h3>עד 3,000,000 ₪</h3>
+          <p>מסגרת רחבה לכל מטרה — מחתונה, רכב ועד גיבוש חובות.</p>
+        </div>
+        <div class="feature">
+          <span class="ft-num">02</span>
+          <h3>12+ גופי מימון</h3>
+          <p>השוואה אוטומטית בין הגופים המובילים בישראל.</p>
+        </div>
+        <div class="feature">
+          <span class="ft-num">03</span>
+          <h3>תוך ~24 שעות</h3>
+          <p>אישור עקרוני מהיר, בימי עבודה רגילים.</p>
         </div>
       </div>
     </div>
 
-    <aside class="form-panel" aria-labelledby="formTitle">
-      <span class="form-tag">[ INIT // 01_LEAD_CAPTURE ]</span>
-      <h2 class="form-title" id="formTitle">השאר פרטים</h2>
-      <p class="form-sub">// פחות מדקה · ‎ללא עלות · ‎ללא התחייבות</p>
+    <aside class="form-aside" id="form" aria-labelledby="formTitle">
+      <div class="form-panel">
+        <span class="form-stamp">בדיקת זכאות</span>
+        <p class="form-byline">— פחות מדקה · ‎ללא עלות —</p>
+        <h2 class="form-title" id="formTitle">השאר פרטים.</h2>
+        <p class="form-sub">נציג מחכם קרדיט יחזור אליך עם הצעה מותאמת אישית.</p>
 
-      <div class="field">
-        <label for="nameInput">שם מלא</label>
-        <input type="text" id="nameInput" autocomplete="name" placeholder="ישראל ישראלי" required>
-        <div class="field-error" id="nameError">נא להזין שם מלא</div>
+        <div class="field">
+          <label for="nameInput">שם מלא</label>
+          <input type="text" id="nameInput" autocomplete="name" placeholder="ישראל ישראלי" required>
+          <div class="field-error" id="nameError">נא להזין שם מלא</div>
+        </div>
+
+        <div class="field">
+          <label for="phoneInput">טלפון נייד</label>
+          <input type="tel" id="phoneInput" inputmode="numeric" autocomplete="tel" placeholder="0501234567" maxlength="10" dir="rtl" required>
+          <div class="field-error" id="phoneError">נא להזין מספר טלפון תקין</div>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="consentBox" value="כן">
+          <span>אני מסכימ/ה ל<a href="/privacy-policy/" target="_blank">תנאי השימוש ומדיניות הפרטיות</a> באתר</span>
+        </label>
+        <div class="consent-required" id="consentError">חובה לאשר את תנאי השימוש כדי להמשיך</div>
+
+        <label class="consent" style="margin-top: 4px;">
+          <input type="checkbox" id="marketingBox" value="כן">
+          <span>אני מסכים/ה לקבל פרסומים שיווקיים מחכם קרדיט</span>
+        </label>
+
+        <button class="cta-btn" id="submitBtn" disabled>
+          בדיקת זכאות
+          <span class="arr">←</span>
+        </button>
+
+        <p class="secure-line">— מוצפן · ‎SSL 256-bit —</p>
       </div>
-
-      <div class="field">
-        <label for="phoneInput">טלפון נייד</label>
-        <input type="tel" id="phoneInput" inputmode="numeric" autocomplete="tel" placeholder="0501234567" maxlength="10" dir="rtl" required>
-        <div class="field-error" id="phoneError">נא להזין מספר טלפון תקין</div>
-      </div>
-
-      <label class="consent">
-        <input type="checkbox" id="consentBox" value="כן">
-        <span>אני מסכימ/ה ל<a href="/privacy-policy/" target="_blank">תנאי השימוש ומדיניות הפרטיות</a> באתר</span>
-      </label>
-      <div class="consent-required" id="consentError">חובה לאשר את תנאי השימוש כדי להמשיך</div>
-
-      <label class="consent" style="margin-top: 4px;">
-        <input type="checkbox" id="marketingBox" value="כן">
-        <span>אני מסכים/ה לקבל פרסומים שיווקיים מחכם קרדיט</span>
-      </label>
-
-      <button class="cta-btn" id="submitBtn" disabled>
-        הפעל בדיקה
-        <span class="arr">$ →</span>
-      </button>
-
-      <p class="secure-line">// מוצפן ומאובטח · ‎<span>SSL 256</span></p>
     </aside>
   </div>
 </section>
 
-<!-- Process / neural nodes -->
-<section class="process">
-  <div class="process-inner">
-    <div class="process-head">
-      <h2>איך זה <em>עובד.</em></h2>
-      <span class="meta">// 3 NODES · NEURAL_FLOW</span>
+<!-- Stat ribbon -->
+<div class="ribbon">
+  <div class="ribbon-inner">
+    <div class="ribbon-cell">
+      <span class="r-val"><small>עד</small>3<small>M ₪</small></span>
+      <span class="r-lbl">סכום הלוואה</span>
     </div>
-    <div class="process-grid">
-      <div class="node">
-        <span class="node-orb">01</span>
-        <h3>השאר פרטים</h3>
-        <p>שני שדות, פחות מדקה. המידע נשלח מוצפן ישירות למערכת.</p>
-        <div class="node-key">INPUT_NODE</div>
-      </div>
-      <div class="node">
-        <span class="node-orb">02</span>
-        <h3>סקירה חכמה</h3>
-        <p>המערכת סורקת עשרות גופי מימון ומבצעת חישוב התאמה בזמן אמת.</p>
-        <div class="node-key">ANALYSIS_NODE</div>
-      </div>
-      <div class="node">
-        <span class="node-orb">03</span>
-        <h3>הצעה אישית</h3>
-        <p>נציג חוזר אליך עם ההצעה המתאימה ביותר — ‎ללא התחייבות.</p>
-        <div class="node-key">OUTPUT_NODE</div>
-      </div>
+    <div class="ribbon-cell">
+      <span class="r-val">12<small>+</small></span>
+      <span class="r-lbl">גופי מימון</span>
+    </div>
+    <div class="ribbon-cell">
+      <span class="r-val"><small>~</small>24<small>ש׳</small></span>
+      <span class="r-lbl">זמן תגובה</span>
+    </div>
+    <div class="ribbon-cell">
+      <span class="r-val">100<small>%</small></span>
+      <span class="r-lbl">דיגיטלי · ‎מאובטח</span>
     </div>
   </div>
-</section>
+</div>
 
 <footer class="foot">
   <div class="foot-inner">
-    <span>© hahamcredit.com — כל הזכויות שמורות</span>
+    <span>© חכם קרדיט — כל הזכויות שמורות</span>
     <a href="/privacy-policy/" rel="noopener">תנאי שימוש ומדיניות פרטיות</a>
   </div>
 </footer>
@@ -844,7 +743,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (!consentOk) $consentErr.addClass('show');
     if (!nameOk || !phoneOk || !consentOk) return;
 
-    $submit.prop('disabled', true).html('// מעבד&hellip;');
+    $submit.prop('disabled', true).text('שולח…');
 
     var formData = {
       name: name,
@@ -876,11 +775,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             return;
           }
         } catch (e) {}
-        $submit.prop('disabled', false).html('הפעל בדיקה <span class="arr">$ →</span>');
+        $submit.prop('disabled', false).html('בדיקת זכאות <span class="arr">←</span>');
         alert('שגיאה בשליחה — נסה שוב');
       },
       error: function () {
-        $submit.prop('disabled', false).html('הפעל בדיקה <span class="arr">$ →</span>');
+        $submit.prop('disabled', false).html('בדיקת זכאות <span class="arr">←</span>');
         alert('שליחה לשרת נכשלה — אנא נסה שוב');
       }
     });
