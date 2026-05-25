@@ -68,7 +68,7 @@ async function sendInforuSMS(phone, code) {
   const token = (process.env.INFORU_TOKEN || '').trim();
   if (!user || !token) throw new Error('InfoRU credentials missing');
   const sender = (process.env.OTP_SENDER || 'hahamcredit').trim();
-  const message = `קוד אימות הזהות שלך לבדיקת תיק הביטוח בהחכם באשראי: ${code}`;
+  const message = `קוד אימות הזהות שלך לבדיקת תיק הביטוח: ${code}`;
 
   const variants = [
     { name: 'xml-ApiToken', kind: 'xml', xml: `<User><Username>${xmlEscape(user)}</Username><ApiToken>${xmlEscape(token)}</ApiToken></User>` },
