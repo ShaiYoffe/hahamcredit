@@ -50,6 +50,8 @@
     '<a href="' + PRIVACY_URL + '">מדיניות פרטיות &raquo;</a></div>' +
     '<button type="button" class="cc-accept">אני מאשר/ת</button>';
   document.documentElement.appendChild(b);
+  // a11y FAB coordination — signals widget to shift up
+  document.documentElement.classList.add('cc-active');
 
   // YMEDIA-SLIM-OVERRIDE v1 — reserve viewport bottom-padding for the banner
   var __ymPad = function(){ try { document.body.style.paddingBottom = (b.offsetHeight + 4) + 'px'; } catch(e){} };
@@ -61,6 +63,7 @@
   b.querySelector('.cc-accept').addEventListener('click', function () {
     try { document.body.style.paddingBottom = ''; } catch (e) {}
     try { localStorage.setItem('cookies_accepted_v1', '1'); } catch (e) {}
+    try { document.documentElement.classList.remove('cc-active'); } catch (e) {}
     b.style.transition = 'transform .3s, opacity .3s';
     b.style.transform = 'translate(6px,6px)';
     b.style.opacity = '0';
